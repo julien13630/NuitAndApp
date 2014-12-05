@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Je souhaite faire un don de :"
-                android:textSize="30dp"
+                android:textSize="29dp"
                 android:textColor="#2980b9"
                 android:id="@+id/textViewDon"
                 android:layout_gravity="center_horizontal"
