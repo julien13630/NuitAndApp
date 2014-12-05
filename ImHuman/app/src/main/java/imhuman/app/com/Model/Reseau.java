@@ -2,13 +2,22 @@ package imhuman.app.com.Model;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.ParseException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -44,6 +53,7 @@ public class Reseau {
     private static String SERVER_URL = "http://192.168.0.5/web/api/";
     public static String ERROR_MESSAGE = "";
     public static boolean LOGED = false;
+    public static UserBean LOGEDUSER = null;
     public static ArrayList<UserBean> ALLUSERLIST = new ArrayList<UserBean>();
 
 
@@ -57,8 +67,9 @@ public class Reseau {
         new Thread(new Runnable() {
 
 
+
             public void run() {
-                String result = sendRequest("account");
+                String result = sendRequest("account", null);
                 if (result == "ERROR")
                 {
 
@@ -71,6 +82,11 @@ public class Reseau {
 
                     JSONArray jArray = new JSONArray(result);
 
+                    if (jArray.length() == 0) {
+                        handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                        return;
+                    }
+
                     ALLUSERLIST.clear();
                     for(int i=0;i<jArray.length();i++)
                     {
@@ -79,9 +95,9 @@ public class Reseau {
 
                         UserBean tmpUser = new UserBean();
                         tmpUser.setId(json_data.getInt("id"));
-                        tmpUser.setEmail(json_data.getString("email"));
-                        tmpUser.setNom(json_data.getString("nom"));
-                        tmpUser.setPrenom(json_data.getString("prenom"));
+                        tmpUser.setEmail(json_data.getString("Email"));
+                        tmpUser.setNom(json_data.getString("Nom"));
+                        tmpUser.setPrenom(json_data.getString("Prenom"));
 
                         ALLUSERLIST.add(tmpUser);
                         //MaBdd.insertClient(new Client(json_data.getString("NUM"), json_data.getString("NOM"), json_data.getString("NTOU"), 0, 0));
@@ -90,13 +106,8 @@ public class Reseau {
                     }
 
 
-                }
-                catch(JSONException e){
-                    Log.i("tagjsonexp",""+e.toString());
-                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
-                    return;
 
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     Log.i("tagjsonpars",""+e.toString());
                     handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
                     return;
@@ -110,38 +121,48 @@ public class Reseau {
 
     }
 
-    public static boolean logIn(String login, String mdp, final Handler handler)
+    public static boolean logIn(final String mail,final String mdp, final Handler handler)
     {
         new Thread(new Runnable() {
 
 
             public void run() {
-                String result = sendRequest("account");
-                JSONObject json_data=null;
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("email", mail));
+                nameValuePairs.add(new BasicNameValuePair("password", mdp));
+                String result = sendRequest("account/login",nameValuePairs );
+                Log.i("tagjsonexp", "" + result);
+
                 try{
+                    JSONObject obj = new JSONObject(result);
 
-                    JSONArray jArray = new JSONArray(result);
+                    try{
+                        ERROR_MESSAGE = obj.getString("error");
+                        handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
 
-
-                    for(int i=0;i<jArray.length();i++)
+                        return;
+                    }
+                    catch(Exception e)
                     {
+                        UserBean tmpUser = new UserBean();
+                        tmpUser.setId(obj.getInt("id"));
+                        tmpUser.setEmail(obj.getString("Email"));
+                        tmpUser.setNom(obj.getString("Nom"));
+                        tmpUser.setPrenom(obj.getString("Prenom"));
 
-                        json_data = jArray.getJSONObject(i);
-                        //MaBdd.insertClient(new Client(json_data.getString("NUM"), json_data.getString("NOM"), json_data.getString("NTOU"), 0, 0));
-                        //myActivity.handler.sendEmptyMessage(3);
-                        java.lang.System.out.println("User "+i);
-
+                        LOGEDUSER = tmpUser;
+                        LOGED = true;
+                        handler.sendEmptyMessage(RESEAU_MESSAGE.LOGED.getValue());
+                        return;
                     }
 
 
                 }
-                catch(JSONException e){
-                    Log.i("tagjsonexp",""+e.toString());
+                catch(Exception e) {
+                    Log.i("tagjsonexp", "" + e.toString());
+                    ERROR_MESSAGE = "Erreur données invalides";
                     handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
-
-                } catch (ParseException e) {
-                    Log.i("tagjsonpars",""+e.toString());
-                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
                 }
             }
         }).start();
@@ -149,18 +170,21 @@ public class Reseau {
         return false;
     }
 
-    private static String sendRequest(String request)
+    private static String sendRequest(String request, List<NameValuePair> nameValuePairs)
     {
 
         String result = null;
         InputStream is = null;
         JSONObject json_data=null;
-
+        if (nameValuePairs == null)
+            nameValuePairs = new ArrayList<NameValuePair>();
 
         try{
             //commandes httpClient
             DefaultHttpClient httpclient = new DefaultHttpClient();
-            HttpGet httppost = new HttpGet(SERVER_URL+request);
+            HttpPost httppost = new HttpPost(SERVER_URL+request);
+
+
             HttpParams httpParameters = new BasicHttpParams();
             // Set the timeout in milliseconds until a connection is established.
             // The default value is zero, that means the timeout is not used.
@@ -172,6 +196,7 @@ public class Reseau {
             HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
             //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             httpclient.setParams(httpParameters);
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
             HttpResponse response = httpclient.execute(httppost);
             HttpEntity entity = response.getEntity();
             is = entity.getContent();
@@ -209,33 +234,7 @@ public class Reseau {
         }
 
         return result;
-        //recuperation des donnees json
-        /*try{
-
-            JSONArray jArray = new JSONArray(result);
-
-
-            for(int i=0;i<jArray.length();i++)
-            {
-
-                json_data = jArray.getJSONObject(i);
-                //MaBdd.insertClient(new Client(json_data.getString("NUM"), json_data.getString("NOM"), json_data.getString("NTOU"), 0, 0));
-                //myActivity.handler.sendEmptyMessage(3);
-                java.lang.System.out.println("Client "+i);
-
-            }
-
-
-        }
-        catch(JSONException e){
-            Log.i("tagjsonexp",""+e.toString());
-            return "ERROR";
-
-        } catch (ParseException e) {
-            Log.i("tagjsonpars",""+e.toString());
-            return "ERROR";
-
-        }*/
+        
 
     }
 }
