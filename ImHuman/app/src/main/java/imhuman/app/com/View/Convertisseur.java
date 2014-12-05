@@ -1,6 +1,10 @@
 package imhuman.app.com.View;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,13 +14,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.logging.Handler;
-
-import imhuman.app.com.Data.UserBean;
 import imhuman.app.com.Model.Reseau;
 import imhuman.app.com.R;
 
 public class Convertisseur extends Activity {
+
+    private AlarmManager alarmMgr;
+    private PendingIntent alarmIntent;
 
     public android.os.Handler handler = new android.os.Handler(){
 
@@ -36,6 +40,7 @@ public class Convertisseur extends Activity {
     };
 
     private Button btEuros;
+    private Button btNotifs;
     private EditText sommeText;
 
     @Override
@@ -68,7 +73,7 @@ public class Convertisseur extends Activity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_alarme) {
             return true;
         }
 
