@@ -27,7 +27,8 @@ public class Convertisseur extends Activity {
                     break;
                 case 7://CONVERT
 
-                    Toast.makeText(Convertisseur.this,"Conversion", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Convertisseur.this, SearchResult.class);
+                    startActivity(intent);
                     break;
 
             }

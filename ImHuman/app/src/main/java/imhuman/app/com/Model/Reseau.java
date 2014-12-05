@@ -241,18 +241,39 @@ public class Reseau {
                     handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
                     return;
                 }
-                JSONObject json_data=null;
+
                 try {
 
-                    JSONArray jArray = new JSONArray(result);
+                    JSONObject jObject = new JSONObject(result);
+
+                    ACTIONSLIST.clear();
+
+                    ActionBean tmp = new ActionBean();
+                    tmp.setType("medicament");
+                    tmp.setText(jObject.getString("medicament"));
+                    ACTIONSLIST.add(tmp);
+
+                    tmp = new ActionBean();
+                    tmp.setType("arbre");
+                    tmp.setText(jObject.getString("arbre"));
+                    ACTIONSLIST.add(tmp);
+
+                    tmp = new ActionBean();
+                    tmp.setType("ecole");
+                    tmp.setText(jObject.getString("ecole"));
+                    ACTIONSLIST.add(tmp);
+
+                    tmp = new ActionBean();
+                    tmp.setType("repas");
+                    tmp.setText(jObject.getString("repas"));
+                    ACTIONSLIST.add(tmp);
+
+                    tmp = new ActionBean();
+                    tmp.setType("kit");
+                    tmp.setText(jObject.getString("kit"));
+                    ACTIONSLIST.add(tmp);
 
 
-
-                    ALLUSERLIST.clear();
-                    for (int i = 0; i < jArray.length(); i++) {
-
-
-                    }
                 }
                 catch(Exception e) {
                     Log.i("tagjsonexp", "" + e.toString());

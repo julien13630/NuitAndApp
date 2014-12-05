@@ -7,6 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import imhuman.app.com.Model.Reseau;
 import imhuman.app.com.R;
 
 public class SearchResult extends Activity {
@@ -18,13 +19,14 @@ public class SearchResult extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_result);
 
+
         Actions weather_data[] = new Actions[]
                 {
-                        new Actions(R.drawable.arbre_icon, "Planter un arbre"),
-                        new Actions(R.drawable.ecole_icon, "Financer une école"),
-                        new Actions(R.drawable.kitscolaire_icon, "Acheter fourniture scolaires"),
-                        new Actions(R.drawable.medicament_icon, "Fournir médicaments"),
-                        new Actions(R.drawable.repas_icon, "Payer un repas")
+                        new Actions(R.drawable.arbre_icon, Reseau.ACTIONSLIST.get(1).getText()),
+                        new Actions(R.drawable.ecole_icon, Reseau.ACTIONSLIST.get(2).getText()),
+                        new Actions(R.drawable.kitscolaire_icon, Reseau.ACTIONSLIST.get(4).getText()),
+                        new Actions(R.drawable.medicament_icon, Reseau.ACTIONSLIST.get(0).getText()),
+                        new Actions(R.drawable.repas_icon, Reseau.ACTIONSLIST.get(3).getText())
                 };
 
         ActionsAdapter adapter = new ActionsAdapter(this,
