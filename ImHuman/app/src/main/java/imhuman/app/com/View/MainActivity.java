@@ -6,13 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
-<<<<<<< HEAD
+
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-=======
+
 import android.widget.Toast;
->>>>>>> 9b784d07b6b100dfb4ae9cf72d4c5d480aa2effc
+
 
 import imhuman.app.com.Data.UserBean;
 import imhuman.app.com.Model.Reseau;
@@ -40,8 +40,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-<<<<<<< HEAD
 
         Button btConnect = (Button) findViewById(R.id.Connexion);
         btConnect.setOnClickListener(new OnClickListener() {
@@ -66,10 +64,9 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
-=======
-        Reseau.logIn("yann.guineau@y-nov.com", "123", handler);
 
->>>>>>> 9b784d07b6b100dfb4ae9cf72d4c5d480aa2effc
+
+
     }
 
 

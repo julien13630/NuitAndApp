@@ -73,6 +73,7 @@
         android:layout_height="wrap_content"
         android:text="Go !"
         android:textSize="40dp"
+        android:id="@+id/bLogIn"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_gravity="bottom"
