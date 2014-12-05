@@ -45,6 +45,7 @@
                 android:layout_marginTop="50dp"/>
 
             <Button
+<<<<<<< HEAD
             style="?android:attr/buttonStyleSmall"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -55,8 +56,21 @@
             android:layout_below="@id/editTextDon"
             android:layout_marginTop="70dp"
             android:layout_gravity="center_horizontal" />
+=======
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:text="Ok"
+                android:textSize="20dp"
+                android:background="#2980b9"
+                android:id="@+id/btEuros"
+                android:layout_below="@id/editTextDon"
+                android:layout_marginTop="70dp"
+                android:layout_gravity="center_horizontal" />
+>>>>>>> ff9c08c1e88accd9239dd73b02cd6fa0eb5c8cc4
 
         </LinearLayout>
+
 
 
 </RelativeLayout>

@@ -40,7 +40,7 @@ import imhuman.app.com.Data.UserBean;
 public class Reseau {
 
     public enum RESEAU_MESSAGE {
-        ERROR(0), LOGED(1), ALLUSERLIST(2), USER(3),PAYSLIST(4), ACTIONSLIST(5), ADDUSER(6), CONVERT(7);
+        ERROR(0), LOGED(1), ALLUSERLIST(2), USER(3),PAYSLIST(4), ACTIONSLIST(5), ADDUSER(6), CONVERT(7), ASSO(8);
 
         private final int value;
         private RESEAU_MESSAGE(int value) {
@@ -56,6 +56,7 @@ public class Reseau {
     public static String ERROR_MESSAGE = "";
     public static boolean LOGED = false;
     public static UserBean LOGEDUSER = null;
+    public static double value;
     public static ArrayList<UserBean> ALLUSERLIST = new ArrayList<UserBean>();
     public static ArrayList<PaysBean> PAYSLIST = new ArrayList<PaysBean>();
     public static ArrayList<ActionBean> ACTIONSLIST = new ArrayList<ActionBean>();
@@ -236,6 +237,7 @@ public class Reseau {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("value",somme+""));
                 String result = sendRequest("mission/search",nameValuePairs );
+                Log.i("tagjsonexp", "" + result);
                 if (result == "ERROR")
                 {
                     handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
@@ -283,10 +285,35 @@ public class Reseau {
                 }
 
                 handler.sendEmptyMessage(RESEAU_MESSAGE.CONVERT.getValue());
+                value = somme;
             }
         }).start();
 
 
+    }
+
+    public static void getAsso(final String action, final String continent,final Handler handler)
+    {
+        new Thread(new Runnable() {
+
+
+            public void run() {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("value",""+value));
+                nameValuePairs.add(new BasicNameValuePair("continent",continent));
+                nameValuePairs.add(new BasicNameValuePair("categorie",action));
+
+                String result = sendRequest("mission/search",nameValuePairs );
+                Log.i("tagjsonpars",""+result);
+                if (result == "ERROR")
+                {
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
+
+                handler.sendEmptyMessage(RESEAU_MESSAGE.ADDUSER.getValue());
+            }
+        }).start();
     }
 
     public static void createUser(final UserBean newUser,final Handler handler)
