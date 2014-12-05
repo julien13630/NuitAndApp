@@ -131,8 +131,12 @@ public class Reseau {
                 nameValuePairs.add(new BasicNameValuePair("email", mail));
                 nameValuePairs.add(new BasicNameValuePair("password", mdp));
                 String result = sendRequest("account/login",nameValuePairs );
-                Log.i("tagjsonexp", "" + result);
+                if (result == "ERROR")
+                {
 
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
                 try{
                     JSONObject obj = new JSONObject(result);
 
