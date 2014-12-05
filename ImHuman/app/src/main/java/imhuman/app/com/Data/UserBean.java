@@ -6,11 +6,33 @@ package imhuman.app.com.Data;
 public class UserBean {
 
     private int id;
-    private String nom, prenom, email;
+    private String nom;
+    private String prenom;
+    private String email;
+    private String password;
 
+    public String getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(String adresse) {
+        this.adresse = adresse;
+    }
+
+    private String adresse;
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public int getId() {
         return id;
+
     }
 
     public void setId(int id) {

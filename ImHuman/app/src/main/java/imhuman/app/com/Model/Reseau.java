@@ -30,6 +30,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import imhuman.app.com.Data.ActionBean;
+import imhuman.app.com.Data.PaysBean;
 import imhuman.app.com.Data.UserBean;
 
 /**
@@ -38,7 +40,7 @@ import imhuman.app.com.Data.UserBean;
 public class Reseau {
 
     public enum RESEAU_MESSAGE {
-        ERROR(0), LOGED(1), AllUserList(2), USER(3),;
+        ERROR(0), LOGED(1), ALLUSERLIST(2), USER(3),PAYSLIST(4), ACTIONSLIST(5), ADDUSER(6);
 
         private final int value;
         private RESEAU_MESSAGE(int value) {
@@ -55,6 +57,8 @@ public class Reseau {
     public static boolean LOGED = false;
     public static UserBean LOGEDUSER = null;
     public static ArrayList<UserBean> ALLUSERLIST = new ArrayList<UserBean>();
+    public static ArrayList<PaysBean> PAYSLIST = new ArrayList<PaysBean>();
+    public static ArrayList<ActionBean> ACTIONSLIST = new ArrayList<ActionBean>();
 
 
     public static void getAllUser(final Handler handler)
@@ -108,7 +112,7 @@ public class Reseau {
                     return;
                 }
 
-                handler.sendEmptyMessage(RESEAU_MESSAGE.AllUserList.getValue());
+                handler.sendEmptyMessage(RESEAU_MESSAGE.ALLUSERLIST.getValue());
             }
         }).start();
 
@@ -169,8 +173,133 @@ public class Reseau {
         return false;
     }
 
+    public static void getListPays(final Handler handler)
+    {
+        new Thread(new Runnable() {
 
 
+
+            public void run() {
+                String result = sendRequest("account", null);
+                if (result == "ERROR")
+                {
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
+
+                JSONObject json_data=null;
+                try{
+
+                    JSONArray jArray = new JSONArray(result);
+
+                    if (jArray.length() == 0) {
+                        handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                        return;
+                    }
+
+                    ALLUSERLIST.clear();
+                    for(int i=0;i<jArray.length();i++)
+                    {
+
+                        json_data = jArray.getJSONObject(i);
+
+                        PaysBean tmpPays = new PaysBean();
+                        tmpPays.setId(json_data.getInt("id"));
+                        tmpPays.setName(json_data.getString("Nom"));
+
+
+                        PAYSLIST.add(tmpPays);
+                        //MaBdd.insertClient(new Client(json_data.getString("NUM"), json_data.getString("NOM"), json_data.getString("NTOU"), 0, 0));
+                        //myActivity.handler.sendEmptyMessage(3);
+
+                    }
+
+
+
+                } catch (Exception e) {
+                    Log.i("tagjsonpars",""+e.toString());
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
+
+                handler.sendEmptyMessage(RESEAU_MESSAGE.PAYSLIST.getValue());
+            }
+        }).start();
+    }
+
+    public static void convert(final double somme,final Handler handler)
+    {
+        new Thread(new Runnable() {
+
+
+            public void run() {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("value",somme+""));
+                String result = sendRequest("mission/search",nameValuePairs );
+                if (result == "ERROR")
+                {
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
+                JSONObject json_data=null;
+                try {
+
+                    JSONArray jArray = new JSONArray(result);
+
+
+
+                    ALLUSERLIST.clear();
+                    for (int i = 0; i < jArray.length(); i++) {
+
+                        json_data = jArray.getJSONObject(i);
+
+                        ActionBean tmpAction = new ActionBean();
+                        tmpAction.setId(json_data.getInt("id"));
+                        tmpAction.setText(json_data.getString("Text"));
+                        tmpAction.setType(json_data.getString("Type"));
+
+
+                        ACTIONSLIST.add(tmpAction);
+
+                    }
+                }
+                catch(Exception e) {
+                    Log.i("tagjsonexp", "" + e.toString());
+                    ERROR_MESSAGE = "Erreur données invalides";
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
+
+                handler.sendEmptyMessage(RESEAU_MESSAGE.ACTIONSLIST.getValue());
+            }
+        }).start();
+
+
+    }
+
+    public static void createUser(final UserBean newUser,final Handler handler)
+    {
+        new Thread(new Runnable() {
+
+
+            public void run() {
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+                nameValuePairs.add(new BasicNameValuePair("nom",newUser.getNom()));
+                nameValuePairs.add(new BasicNameValuePair("prenom",newUser.getPrenom()));
+                nameValuePairs.add(new BasicNameValuePair("email",newUser.getEmail()));
+                nameValuePairs.add(new BasicNameValuePair("mdp",newUser.getPassword()));
+
+                String result = sendRequest("account/create",nameValuePairs );
+                if (result == "ERROR")
+                {
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
+
+                handler.sendEmptyMessage(RESEAU_MESSAGE.ADDUSER.getValue());
+            }
+        }).start();
+    }
     private static String sendRequest(String request, List<NameValuePair> nameValuePairs)
     {
 
