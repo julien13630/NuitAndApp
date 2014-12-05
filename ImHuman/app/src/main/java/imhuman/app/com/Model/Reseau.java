@@ -57,11 +57,6 @@ public class Reseau {
     public static ArrayList<UserBean> ALLUSERLIST = new ArrayList<UserBean>();
 
 
-
-    public Reseau() {
-
-    }
-
     public static void getAllUser(final Handler handler)
     {
         new Thread(new Runnable() {
@@ -173,6 +168,8 @@ public class Reseau {
 
         return false;
     }
+
+
 
     private static String sendRequest(String request, List<NameValuePair> nameValuePairs)
     {
