@@ -48,6 +48,14 @@ public class MainActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        Button btSearch = (Button) findViewById(R.id.Recherche);
+        btSearch.setOnClickListener(new OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SearchResult.class);
+                startActivity(intent);
+            }
+        });
     }
 
 

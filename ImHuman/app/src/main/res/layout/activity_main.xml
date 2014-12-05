@@ -29,4 +29,12 @@
         android:id="@+id/Convertisseur"
         android:layout_below="@id/Inscription"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rechercher"
+        android:id="@+id/Recherche"
+        android:layout_below="@id/Convertisseur"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

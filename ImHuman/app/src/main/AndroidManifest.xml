@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="imhuman.app.com" >
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -27,6 +29,10 @@
         <activity
             android:name="imhuman.app.com.View.Convertisseur"
             android:label="@string/title_activity_convertisseur" >
+        </activity>
+        <activity
+            android:name="imhuman.app.com.View.SearchResult"
+            android:label="@string/title_activity_search_result" >
         </activity>
     </application>
 
