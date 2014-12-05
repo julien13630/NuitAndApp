@@ -1,0 +1,156 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#bdc3c7"
+        tools:context="imhuman.app.com.View.Inscription">
+
+        <RelativeLayout
+            android:layout_weight="2"
+            android:background="#2980b9"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:id="@+id/relativeLayout">
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="INSCRIPTION"
+                android:textColor="#bdc3c7"
+                android:textSize="60dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="EMAIL"
+            android:layout_below="@+id/relativeLayout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:inputType="textEmailAddress"
+            android:id="@+id/etEmail"
+            android:layout_below="@id/tvEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="PASSWORD"
+            android:layout_below="@+id/etEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/etPassword"
+            android:layout_below="@+id/tvPassword"
+            android:layout_alignLeft="@id/etEmail"
+            android:layout_alignStart="@id/etEmail"
+            android:layout_alignRight="@id/etEmail"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="NAME"
+            android:layout_below="@+id/etPassword"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:layout_alignLeft="@id/etEmail"
+            android:layout_alignStart="@id/etEmail"
+            android:layout_alignRight="@id/etEmail"
+            android:layout_below="@+id/tvName"
+            android:id="@+id/etName"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="2dp"/>
+
+        <TextView
+            android:id="@+id/tvFName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="FAMILY NAME"
+            android:layout_below="@+id/etName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/etEmail"
+            android:layout_alignStart="@id/etEmail"
+            android:layout_alignRight="@id/etEmail"
+            android:inputType="textPersonName"
+            android:id="@+id/etFName"
+            android:layout_below="@+id/tvFName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp" />
+
+        <TextView
+            android:id="@+id/tvAdresse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="35dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="ADRESSE"
+            android:layout_below="@+id/etFName"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPostalAddress"
+            android:layout_alignLeft="@id/etEmail"
+            android:layout_alignStart="@id/etEmail"
+            android:layout_alignRight="@id/etEmail"
+            android:id="@+id/etAdresse"
+            android:layout_below="@+id/tvAdresse"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="S'inscrire"
+            android:textSize="40dp"
+            android:id="@+id/btInscription"
+            android:layout_below="@+id/etAdresse"
+            android:layout_alignParentLeft="true" />
+
+
+    </RelativeLayout>
+</ScrollView>

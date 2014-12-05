@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/top"
+        android:background="#bdc3c7"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/center_point"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" />
+
+        <LinearLayout
+            android:id="@+id/left_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignBottom="@+id/center_point"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Je souhaite faire un don de :"
+                android:textSize="30dp"
+                android:textColor="#2980b9"
+                android:id="@+id/textViewDon"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="50dp"/>
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="70dp"
+                android:layout_marginRight="70dp"
+                android:inputType="numberDecimal"
+                android:hint="€"
+                android:textSize="50dp"
+                android:ellipsize="start"
+                android:gravity="right"
+                android:id="@+id/editTextDon"
+                android:layout_below="@id/textViewDon"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"/>
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Ok"
+                android:textSize="50dp"
+                android:background="#2980b9"
+                android:id="@+id/button"
+                android:layout_below="@id/editTextDon"
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/right_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/center_point"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Je veux aider :"
+            android:textColor="#2980b9"
+            android:textSize="30dp"
+            android:id="@+id/tvQuoi"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="50dp"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spOu"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spQui"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+</RelativeLayout>
