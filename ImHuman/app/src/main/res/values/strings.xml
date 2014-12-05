@@ -8,5 +8,8 @@
     <string name="title_activity_connexion">Connexion</string>
     <string name="title_activity_convertisseur">Convertisseur</string>
     <string name="title_activity_search_result">SearchResult</string>
+    <string name="notification">Notification www.tutos-android.com</string>
+    <string name="notification_title">Ma premiere notification www.tutos-android.com</string>
+    <string name="notification_desc">Cliquez sur moi je suis une notification</string>
 
 </resources>

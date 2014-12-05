@@ -45,16 +45,16 @@
                 android:layout_marginTop="50dp"/>
 
             <Button
-                style="?android:attr/buttonStyleSmall"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:text="Ok"
-                android:textSize="50dp"
-                android:background="#2980b9"
-                android:id="@+id/btEuros"
-                android:layout_below="@id/editTextDon"
-                android:layout_marginTop="70dp"
-                android:layout_gravity="center_horizontal" />
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:textSize="50dp"
+            android:background="#2980b9"
+            android:id="@+id/btEuros"
+            android:layout_below="@id/editTextDon"
+            android:layout_marginTop="70dp"
+            android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
 
