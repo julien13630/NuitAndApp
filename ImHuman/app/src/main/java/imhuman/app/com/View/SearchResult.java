@@ -85,7 +85,7 @@ public class SearchResult extends Activity {
                 lw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Reseau.getAsso(Reseau.ACTIONSLIST.get(selectedAction).getType(), Continent.get(position-1), handler);
+                        Reseau.getAsso(Reseau.ACTIONSLIST.get(selectedAction).getType(), Continent.get(position), handler);
                     }
                 });
                 builder.setView(lw);
