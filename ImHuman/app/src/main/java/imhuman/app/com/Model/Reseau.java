@@ -52,11 +52,12 @@ public class Reseau {
         }
     }
 
-    private static String SERVER_URL = "http://192.168.0.5/web/api/";
+    private static String SERVER_URL = "http://voidmx.net/lndli/api/";
     public static String ERROR_MESSAGE = "";
     public static boolean LOGED = false;
     public static UserBean LOGEDUSER = null;
     public static double value;
+    public static String selectedAction;
     public static ArrayList<UserBean> ALLUSERLIST = new ArrayList<UserBean>();
     public static ArrayList<PaysBean> PAYSLIST = new ArrayList<PaysBean>();
     public static ArrayList<ActionBean> ACTIONSLIST = new ArrayList<ActionBean>();
@@ -296,24 +297,52 @@ public class Reseau {
     {
         new Thread(new Runnable() {
 
-
             public void run() {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-                nameValuePairs.add(new BasicNameValuePair("value",""+value));
-                nameValuePairs.add(new BasicNameValuePair("continent",continent));
-                nameValuePairs.add(new BasicNameValuePair("categorie",action));
+                nameValuePairs.add(new BasicNameValuePair("value", "" + value));
+                nameValuePairs.add(new BasicNameValuePair("continent", continent));
+                nameValuePairs.add(new BasicNameValuePair("categorie", action));
 
-                String result = sendRequest("mission/search",nameValuePairs );
-                Log.i("tagjsonpars",""+result);
-                if (result == "ERROR")
-                {
+                String result = sendRequest("mission/search", nameValuePairs);
+                Log.i("tagjsonpars", "" + result);
+                if (result == "ERROR") {
                     handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
                     return;
                 }
 
-                handler.sendEmptyMessage(RESEAU_MESSAGE.ADDUSER.getValue());
+                JSONObject json_data = null;
+                try {
+
+                    JSONArray jArray = new JSONArray(result);
+
+                    if (jArray.length() == 0) {
+                        handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                        return;
+                    }
+
+
+
+                        json_data = jArray.getJSONObject(0);
+
+                        selectedAction = json_data.getString("message");
+
+
+
+
+                        //MaBdd.insertClient(new Client(json_data.getString("NUM"), json_data.getString("NOM"), json_data.getString("NTOU"), 0, 0));
+                        //myActivity.handler.sendEmptyMessage(3);
+
+
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ASSO.getValue());
+                } catch (Exception e) {
+                    Log.i("tagjsonexp", "" + e.toString());
+                    ERROR_MESSAGE = "Erreur données invalides";
+                    handler.sendEmptyMessage(RESEAU_MESSAGE.ERROR.getValue());
+                    return;
+                }
             }
         }).start();
+
     }
 
     public static void createUser(final UserBean newUser,final Handler handler)
@@ -326,7 +355,10 @@ public class Reseau {
                 nameValuePairs.add(new BasicNameValuePair("nom",newUser.getNom()));
                 nameValuePairs.add(new BasicNameValuePair("prenom",newUser.getPrenom()));
                 nameValuePairs.add(new BasicNameValuePair("email",newUser.getEmail()));
-                nameValuePairs.add(new BasicNameValuePair("mdp",newUser.getPassword()));
+                nameValuePairs.add(new BasicNameValuePair("password",newUser.getPassword()));
+                nameValuePairs.add(new BasicNameValuePair("code_postal","00000"));
+                nameValuePairs.add(new BasicNameValuePair("adresse","a"));
+                nameValuePairs.add(new BasicNameValuePair("pays",""));
 
                 String result = sendRequest("account/create",nameValuePairs );
                 if (result == "ERROR")

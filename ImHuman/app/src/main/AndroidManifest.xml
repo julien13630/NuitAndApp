@@ -18,6 +18,10 @@
             android:label="@string/title_activity_connexion" >
         </activity>
         <activity
+            android:name="imhuman.app.com.View.Dons"
+            android:label="Asso" >
+        </activity>
+        <activity
             android:name="imhuman.app.com.View.Convertisseur"
             android:label="@string/title_activity_convertisseur" >
             <intent-filter>

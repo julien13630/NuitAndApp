@@ -29,7 +29,8 @@ public class SearchResult extends Activity {
                     break;
                 case 8://ASSO
 
-                    Toast.makeText(SearchResult.this, "ASSO GOOD", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(SearchResult.this, Dons.class);
+                    startActivity(intent);
                     break;
 
             }
