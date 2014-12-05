@@ -52,7 +52,7 @@
                 android:text="Ok"
                 android:textSize="50dp"
                 android:background="#2980b9"
-                android:id="@+id/button"
+                android:id="@+id/btEuros"
                 android:layout_below="@id/editTextDon"
                 android:layout_marginTop="40dp"
                 android:layout_gravity="center_horizontal" />

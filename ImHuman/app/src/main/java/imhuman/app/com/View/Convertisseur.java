@@ -1,18 +1,54 @@
 package imhuman.app.com.View;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import java.util.logging.Handler;
+
+import imhuman.app.com.Data.UserBean;
+import imhuman.app.com.Model.Reseau;
 import imhuman.app.com.R;
 
 public class Convertisseur extends Activity {
+
+    public android.os.Handler handler = new android.os.Handler(){
+
+        public void handleMessage(android.os.Message msg) {
+            switch (msg.what){
+                case 0://ERROR
+                    Toast.makeText(Convertisseur.this, Reseau.ERROR_MESSAGE, Toast.LENGTH_LONG).show();
+                    break;
+                case 7://CONVERT
+
+                    Toast.makeText(Convertisseur.this,"Conversion", Toast.LENGTH_LONG).show();
+                    break;
+
+            }
+        };
+    };
+
+    private Button btEuros;
+    private EditText sommeText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_convertisseur);
+
+        btEuros = (Button) findViewById(R.id.btEuros);
+        sommeText = (EditText) findViewById(R.id.editTextDon);
+        btEuros.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Reseau.convert(Double.parseDouble(sommeText.getText().toString()),handler);
+            }
+        });
     }
 
 

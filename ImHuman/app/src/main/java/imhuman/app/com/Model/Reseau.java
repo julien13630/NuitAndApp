@@ -40,7 +40,7 @@ import imhuman.app.com.Data.UserBean;
 public class Reseau {
 
     public enum RESEAU_MESSAGE {
-        ERROR(0), LOGED(1), ALLUSERLIST(2), USER(3),PAYSLIST(4), ACTIONSLIST(5), ADDUSER(6);
+        ERROR(0), LOGED(1), ALLUSERLIST(2), USER(3),PAYSLIST(4), ACTIONSLIST(5), ADDUSER(6), CONVERT(7);
 
         private final int value;
         private RESEAU_MESSAGE(int value) {
@@ -251,15 +251,6 @@ public class Reseau {
                     ALLUSERLIST.clear();
                     for (int i = 0; i < jArray.length(); i++) {
 
-                        json_data = jArray.getJSONObject(i);
-
-                        ActionBean tmpAction = new ActionBean();
-                        tmpAction.setId(json_data.getInt("id"));
-                        tmpAction.setText(json_data.getString("Text"));
-                        tmpAction.setType(json_data.getString("Type"));
-
-
-                        ACTIONSLIST.add(tmpAction);
 
                     }
                 }
@@ -270,7 +261,7 @@ public class Reseau {
                     return;
                 }
 
-                handler.sendEmptyMessage(RESEAU_MESSAGE.ACTIONSLIST.getValue());
+                handler.sendEmptyMessage(RESEAU_MESSAGE.CONVERT.getValue());
             }
         }).start();
 
